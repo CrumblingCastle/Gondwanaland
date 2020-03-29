@@ -1,0 +1,65 @@
+#include <iostream>  
+#ifndef CONTEST  
+#include "fullratio.hpp"  
+#endif  
+  
+using namespace std;  
+  
+int ar,par,g;  
+  
+rational::rational (int n, int d) {  
+  nom=n; den=d;  
+  g=gcd(abs(nom),abs(den));  
+  nom=nom/g; den=den/g;  
+}  
+  
+rational operator + (const rational &x, const rational &y) {  
+  ar=x.nom*y.den+y.nom*x.den;  
+  par=x.den*y.den;  
+  g=x.gcd(abs(ar),abs(par));  
+  ar=ar/g; par=par/g;  
+  rational a(ar,par);  
+  return(a);  
+}  
+  
+rational operator - (const rational &x, const rational &y) {  
+  ar=x.nom*y.den-y.nom*x.den;  
+  par=x.den*y.den;  
+  g=x.gcd(abs(ar),abs(par));  
+  ar=ar/g; par=par/g;  
+  rational a(ar,par);  
+  return(a);  
+}  
+  
+rational operator * (const rational &x, const rational &y) {  
+  ar=x.nom*y.nom;  
+  par=x.den*y.den;  
+  g=x.gcd(abs(ar),abs(par));  
+  ar=ar/g; par=par/g;  
+  rational a(ar,par);  
+  return(a);  
+}  
+  
+rational operator / (const rational &x, const rational &y) {  
+  ar=x.nom*y.den;  
+  par=x.den*y.nom;  
+  g=x.gcd(abs(ar),abs(par));  
+  ar=ar/g; par=par/g;  
+  rational a(ar,par);  
+  return(a);  
+}  
+  
+std::ostream & operator << (std::ostream &out, const rational &x) {  
+  if ((x.nom>0 and x.den <0) or (x.nom<0 and x.den>0)){  
+  out << "-" << abs(x.nom) << "/" << abs(x.den);  
+  }  
+  else  
+  out << abs(x.nom) << "/" << abs(x.den);  
+  return out;  
+}  
+  
+int rational::gcd (int a, int b) {  
+  while (a > 0 && b > 0)    
+    if (a > b) a %= b; else b %= a;    
+  return a + b;    
+}  

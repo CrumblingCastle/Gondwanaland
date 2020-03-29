@@ -1,0 +1,67 @@
+#ifndef CONTEST  
+ #include "babyratio.hpp"  
+ #endif  
+ #include<iostream>  
+ using namespace std;  
+  
+ long int ar,par,g;  
+  
+ rational::rational (int n, int d){  
+   nom=n; den=d;  
+   g=gcd(abs(nom),abs(den));  
+   nom=nom/g; den=den/g;  
+ }  
+  
+ rational rational::add (rational r){  
+   ar=nom*r.den+den*r.nom;  
+   par=den*r.den;  
+   g=gcd(abs(ar),abs(par));  
+   ar=ar/g;  
+   par=par/g;  
+   rational a(ar,par);  
+   return(a);  
+ }  
+  
+ rational rational::sub (rational r){  
+   ar=(nom*r.den-den*r.nom);  
+   par=den*r.den;  
+   g=gcd(abs(ar),abs(par));  
+   ar=ar/g;  
+   par=par/g;  
+   rational a(ar,par);  
+   return(a);  
+ }  
+  
+ rational rational::mul (rational r){  
+   ar=nom*r.nom;  
+   par=den*r.den;  
+   g=gcd(abs(ar),abs(par));  
+   ar=ar/g;  
+   par=par/g;  
+   rational a(ar,par);  
+   return(a);  
+ }  
+  
+ rational rational::div (rational r){  
+   ar=nom*r.den;  
+   par=den*r.nom;  
+   g=gcd(abs(ar),abs(par));  
+   ar=ar/g;  
+   par=par/g;  
+   rational a(ar,par);  
+   return(a);  
+ }  
+    
+   void rational::print (){  
+     if ((nom>0 and den<0) or (nom<0 and den>0))  
+     {  
+       cout << "-";  
+     }  
+     cout << abs(nom) << "/" << abs(den);  
+ }  
+  
+  int rational::gcd(int a, int b) {  
+      while (a > 0 && b > 0)  
+         if (a > b) a %= b; else b %= a;  
+       return a + b;  
+ }  
