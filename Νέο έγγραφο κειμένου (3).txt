@@ -1,0 +1,73 @@
+#include <iostream>
+
+using namespace std;
+template <typename T>
+class stack {
+
+ public:
+
+   stack (int size) {
+   mysize = size;
+   data = new T[mysize];
+   top=0;
+    }
+
+   stack (const stack &s) {
+     mysize=s.mysize;
+     data = new T[mysize];
+     top=s.top;
+     for (int i=0; i<top; i++){
+       data[i]=s.data[i];
+     }
+   }
+
+   ~stack () {
+     delete [] data;
+     data=NULL;
+    }
+
+   const stack & operator = (const stack &s) {
+    delete [] data;
+    data=NULL;
+    mysize=s.mysize;
+    data = new T[mysize];
+    top=s.top;
+    for (int i=0; i<top; i++){
+      data[i]=s.data[i];
+    }
+      return *this;
+   }
+
+
+  bool empty () {
+     return top==0;
+   }
+
+   void push (const T &x) {
+     data[top++]=x;
+   }
+
+   T pop () {
+     return data[--top];
+   }
+
+   int size () {
+     return top;
+   }
+
+   friend ostream & operator << (ostream &out, const stack &s) {
+     cout << "[";
+     for (int i=0; i<s.top-1; i++) {
+       cout << s.data[i] << ", " ;
+     }
+     if (s.top>0) {
+       cout << s.data[s.top-1];
+     }
+    cout << "]";
+     return out;
+
+
+ private:
+   int mysize, top;
+   T* data;
+};
